@@ -1,0 +1,469 @@
+
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="robots" content="noindex,nofollow,noarchive">
+        <title>primer2004</title>
+	<style>
+		body {
+			margin: 0;
+			background-color: black !important;
+		}
+
+		#player {
+			width: 100%;
+		}
+
+        #player > .placeholder {
+			color: white;
+        }
+	</style>
+
+
+
+<script data-name="main">
+	var playerBase= "https://cdn.jsdelivr.net/npm/venom-player@0.2.86" + '/dist/', app,tryLoad=1,
+		embedHost= "api.kinogram.best",
+		consumerHost= "kpfr.cc", 
+		consumerId= 11519 ,
+		ancestorOrigins= location.ancestorOrigins && Array.from ? Array.from(location.ancestorOrigins) : [],
+		id= 259369 , franchiseID= 30396 ;
+	var isEmbedded; try { isEmbedded = self !== top; } catch (e) {isEmbedded = true}
+	var sameOrigin; try { sameOrigin = top.location.origin === location.origin } catch(e) {}
+	if(isEmbedded&&!sameOrigin){
+		__s('cat=frame&hit=sub&host='+location.hostname.split('.')[0].replace(/api\d+/,'api{0}'));
+		addEventListener('message',function(e){if('ping'==e.data)e.source.postMessage('pong',e.origin)});
+	}
+	if (isEmbedded && !sameOrigin && window.fetch && window.URL && !/(greenfilm\.vip|vsetam.net|zetfi?l?i?x(main|24|s)?\.\w{2,4})$/.test(consumerHost||'')) { 
+		
+		var url = new URL(location.href), re = /^api\d+\./;
+		if (re.test(url.hostname)) {
+			url.hostname = url.hostname.replace(re, 'api.');
+			fetch(url.origin+'/ping/',{method:'head'}).then(function (r) {
+				url.searchParams.set('host', new URL(document.referrer).hostname);
+				if(r.status===200)location.href=url.href;
+			})
+		}
+	}
+	var ua = navigator.userAgent
+		.replace(/\sMobile\/\S+/, '')
+		.replace('iPhone; CPU iPhone','iPhone')
+		.replace(' (KHTML, like Gecko)', '')
+		.replace('Mozilla/5.0 (', '')
+		.replace(' like Mac OS X)', '')
+		.replace('Mobile', 'M')
+		.replace('Safari', 'S')
+		.replace(/(OS\s\d+)(_\d+)+/g,'$1')
+		.replace(/(\d+)(\.\d+)+/g,'$1')
+		.replace(/\sAppleWebKit\/\d+/, '');
+	var iPhone = ~ua.indexOf('iPhone') && ua.indexOf('Windows') == -1 ? 'iPhone' : 'other';
+	var notSafari=/(GSA|CriOS|YaBrowser|YaApp_iOS|UCBrowser|Instagram|vkclient|FBSV|MicroMessenger|FxiOS|EdgiOS|RDDocuments|LightSpeed|MessengerLiteForiOS|OPT|MiuiBrowser|YaaniBrowser|AlohaBrowser|Baiduspider)\/?\d*/;
+	setTimeout(function () {
+		__s('cat=frame&hit=embed&sub='+(isEmbedded?'embed':'top')+'&type='+(sameOrigin?'same':'diff')+'&label='+iPhone+'&host='+consumerHost)
+	},1000);
+	setTimeout(function () {
+		__s('cat=frame&hit=embed1m&sub='+(isEmbedded?'embed':'top')+'&type='+(sameOrigin?'same':'diff')+'&label='+iPhone+'&host='+consumerHost)
+	}, 1000 * 60);
+	if (iPhone === 'iPhone') {
+		var nameVer = notSafari.test(ua) ? ua.match(notSafari)[0] : ua.split(' ').slice(-2)[0];
+		nameVer = (nameVer || '').split('/');
+		if(!nameVer[0]||parseInt(nameVer[0])|| ~['iPhone','M','OS',''].indexOf(nameVer[0].replace(/\W/g,''))) {
+			nameVer = [navigator.userAgent];
+		}
+		if(/\W/.test(nameVer[0]||'')) nameVer = [ua.replace(/\s/g,'_').replace(/\W/g,'-')];
+		var major = parseInt(nameVer[1]) || nameVer[1]||'-',
+            ancestorProtocols=ancestorOrigins.map(function(d){return d.match(/(.+):/)[1]});
+		__s('cat=support&hit=swIos&sub='+location.protocol+(navigator.serviceWorker?'sw':'')+
+			'&type='+nameVer[0]+'&label='+major+'&description='+ancestorProtocols);
+	}var unixTime= 1701976670 ;
+	addEventListener('error', function (e, f, l, c) {
+		try {
+			e = e || '';
+			f = f || e.filename || '';
+			l = l || e.lineno;
+			c = c || e.colno;
+			var lc = (l || c) ? l + ':' + c : '',
+				m = (e.message || e).toString().replace(/\n/g, '')
+					.replace('Uncaught SecurityError: Blocked a frame with origin', 'blockFR')
+					.replace('from accessing a cross-origin frame', '')
+					.replace(/https?:\/\/api\d+/, 'api.')
+					.replace("token ')'",'token )' )
+					.replace(/uncaught(?:\sexception)?\s+/i, '');
+			__s('cat=window&hit=error&sub=' + lc + f + '&label=' + m);
+		} catch (e) {
+			__s('cat=window&hit=error&label=WTF_'+e);
+		}
+		var n = document.getElementById('player'), p;
+		if (n && !app) {
+			n.style.border = '1px dashed red';
+			p = document.createElement('p');
+			p.innerText = m;
+			p.style.color = 'red';
+			n.appendChild(p);
+		}
+    });
+	function __s(s){
+		new Image().src = "https://s.myangular.life/player?"+s;
+	}
+
+	function makePlayer(opts) {
+		var s
+		if (!window.VenomPlayer) {
+			if(tryLoad==1){
+				playerBase='https://unpkg.com/'+playerBase.slice(playerBase.indexOf('venom'));
+				s=document.createElement('script');
+				s.src=playerBase+'player.js';
+				s.onload=function(){setTimeout(function(){makePlayer(opts)},1000)};
+				s.onerror=function(){__s('cat=window&hit=error&label=PLAYER_LOAD_FAIL_UNPKG')};
+				document.head.appendChild(s)
+			}
+			throw 'PLAYER_LOAD_FAIL_'+tryLoad++;
+		}
+		if (VenomPlayer.isMobile) try {
+			localStorage.removeItem('player.volume')
+		} catch (e) {}
+
+		Object.assign(opts, {
+			container: document.getElementById('player'),
+			publicPath: playerBase,
+			ads: adsConfig,
+			defaultPoster:'',
+			speed: [1, 1.1, 1.25, 1.5],
+			restrictSpeed: function(s, q) {return s > 1 && q > 555?'��������� �������� �������� ������ �� ������ �������� �����':''},
+			volume:1,
+			preventExternalSilencing:true,
+			aspectRatio: isEmbedded ? 'fill' : '16:9',
+			mini:320,
+			reportUrl: 'https://apicollaps.cc/bug-report',
+			stats: ['wss://s.myangular.life/ws?ref_id=11519'],
+			hlsNativeParam:true,
+			dash: {
+				streaming: {
+					stableBufferTime: 120,
+					bufferTimeAtTopQualityLongForm: 120
+				}
+			},
+			download: "https://fazhzcezbdi.showvid.ws/x-px/video-download?m=https%3A%2F%2Fhye1eaipby4w.takedwn.ws%2F07_11_20%2F07%2F11%2F06%2FY3CGH3NJ%2FK2Y7RKRM.mp4%2Fmaster.m3u8\u0026name=%D0%94%D0%B5%D1%82%D0%BE%D0%BD%D0%B0%D1%82%D0%BE%D1%80",
+			theme: "classic",
+			cssVars:{"color-text":"rgba(255,255,255,1)","border-radius":"0rem","color-buttons":"rgba(255,255,255,1)","color-primary":"rgba(0,217,231,1)","background-color-primary":"rgba(0,0,0,0.6)","button-icon-color":"rgba(255,255,255,1)"},
+			time:  0 ,
+			soundBlock: "delete",
+			autoLandscape:true,
+			preview: {
+				interval: 5,
+				width: 160, height: 90,
+				spriteSize: 100, rowSize: 10,
+				src: 'https://img.zcvh.net/'+  607807  +'/desktop/thumb-${spriteNum}.webp',
+				firstNum: 1, pad: 1
+			},
+			
+			p2p: Object.assign({
+				testM: true,
+				testMhls: true,
+				packetSize: 16e3,
+				rtc: {
+					peerConnection: {
+						iceServers: [
+							{ urls: "stun:stun.l.google.com:19302" },
+							{
+								urls: "turn:turn.zcvh.net:5349",
+								'username': 'brucewayne',
+								'credential': '12345'
+							}
+						],
+						bundlePolicy: "max-compat"
+					}
+				}
+			},opts.p2p),
+			ui: Object.assign({
+				titleOnlyOnFullscreen:  false ,
+				pip: true,
+				about: false,
+				share:  true 
+			}, opts.ui),
+			translations: {en:{ screen: 'intro', repeat: 'repeat', titer: 'titer',
+					pipIn: 'Picture in Picture', pipOut: 'expand' }},
+			text: Object.assign({
+				ads: '�������', screen: '�����', repeat: '������', titer: '�����',
+				blocked:'����� ������������� �� ������� ���������������'
+			},opts.text)
+		});
+		var safariVersion;
+		if (
+			location.pathname.startsWith('/embed/')
+			&& /^https:\/\/(api[a-z\-]*|mm)\./.test(location.href)
+			&& location.href.indexOf('sw=no') < 0
+		) {
+			opts.sw = '/embed/sw.js';
+			if(!navigator.serviceWorker && iPhone==='iPhone') {
+				if(ancestorOrigins.some(function (e){return e.startsWith('http:')})){
+					opts.restrictQuality = function (q) {if(+q>480)
+						return '��������� �������� �������� ������ �� ���������� ��������� (https)'
+					};
+				} else if(notSafari.test(ua)) {
+					opts.restrictQuality = function (q) {if(+q>480)return '��������� �������� �������� ������ � Safari'};
+				} else {
+					safariVersion = ua.match(/Version\/(\d+)/);
+					if(safariVersion&& +safariVersion[1] > 10) {
+						opts.restrictQuality = function (q) {
+							if(navigator.serviceWorker)return;
+							return parseInt(q) > 480 && '��������� �������� �������� ������ � Safari<br>���� =&gt; ������� � Safari';
+						};
+					}
+				}
+			}
+		}
+		addEventListener('message', function (e) {
+			if(!opts.playlist)return;
+			if(e.data=='playlist hook'){
+				opts.playlist.autoPlay=false;e.source.postMessage('playlist hooked','*');
+			} else if(e.data=='playlist hooked play'&& opts.playlist.autoPlay===false) {
+				app.play()
+			}
+		});
+		app= VenomPlayer.make(opts);
+		if (window.listen) {
+			app.onRenew = listen;
+			listen(app);
+		}
+	}
+
+    (function(){
+	try{
+	var w = window, MS = w.MediaSource || w.WebKitMediaSource,
+		opus = MS && MS.isTypeSupported && MS.isTypeSupported('audio/webm; codecs="opus"'),
+		pc = w.RTCPeerConnection || w.mozRTCPeerConnection || w.webkitRTCPeerConnection,
+		dc = w.WebSocket && pc && pc.prototype && pc.prototype.createDataChannel ? 'dc' : '',
+		wasm = w.WebAssembly ? 'wasm ' : '';
+	support('u8',w.Uint8Array);
+	support('weak-ref',w.WeakRef);
+	support('find',Array.prototype.find);
+	__s('cat=support&hit=opus&description='+opus);
+	__s('cat=support&hit=wasm&description='+(wasm+dc || '-'));
+	} catch (e) { }
+
+	var supportsAsync;
+	try{new Function('async ()=>1');supportsAsync=1}catch(e){}
+	support('async',supportsAsync);
+
+	function support(name,v){__s('cat=support&hit='+name+'&description='+(v?'yes':'-'))}
+	})();
+</script>
+<script src="https://api.kinogram.best/cdn.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/venom-player@0.2.86" crossorigin="anonymous"></script>
+<script src="https://api.kinogram.best/js/listen-player.js" async crossorigin="anonymous"></script>
+
+    <script data-name="ping">
+		!function () {
+			if (!window.fetch) return;
+
+			var interval = 5 * 60 * 1000,
+				timers = {};
+
+			
+
+			setTimeout(function ping() {
+				if (window.VenomPlayer) {
+					setTimeout(ping, interval);
+					pingHost("kinogram.best");
+				}
+			}, interval);
+
+			function pingHost(host, url) {
+				if (!host) return;
+				var r = send.bind(null, host);
+				if (!url) url = 'https://api.' + host + '/ping/';
+				fetch(url).then(r).catch(r);
+				timers[host] = Date.now();
+			}
+
+			function send(host, r) {
+				VenomPlayer.stats({
+					hit: 'ping',
+					host: host,
+					value: +(r && r.ok),
+					time: Date.now() - timers[host]
+				});
+			}
+		}();
+
+		setTimeout(function () {
+			window.VenomPlayer &&
+			VenomPlayer.stats({ hit: 'ts', time: Date.now() / 1000 | 0 });
+		}, 6e4);
+
+		
+		if (Math.random() < 0.01 && window.fetch) setTimeout(function () {
+			fetch('https://api.getsdk.online/check').then(function (r) {
+				return r.json()
+			}).then(function (r) {
+				fetch(r.url).catch(function () {
+					return new Promise(function (_, rej) {
+						setTimeout(rej, 1e4)
+					});
+				}).catch(function () {
+					return fetch(r.url)
+				}).catch(function () {
+					new Image().src = 'https://api.getsdk.online/error?id=' + r.id;
+				});
+			}).catch(function () {
+			});
+		}, 6e4);
+    </script>
+
+
+    <script data-name="ss">
+		var settingsOrigin = 'https://api.stiven-king.com',
+			settingsFrame = document.createElement('iframe'),
+			totalTimeKey = 'player.totalTime';
+		settingsFrame.src = settingsOrigin + '/storage.html';
+		settingsFrame.style.width = 0;
+		settingsFrame.style.height = 0;
+		settingsFrame.style.border = 0;
+		addEventListener('DOMContentLoaded', function () {
+			document.body.appendChild(settingsFrame);
+		});
+		addEventListener('message', function (e) {
+			if (e.origin === settingsOrigin && e.data && e.data.key === totalTimeKey) try {
+				var remote = +e.data.value,
+					local = +localStorage.getItem(totalTimeKey) || 0;
+				if (remote > local) {
+					localStorage.setItem(totalTimeKey, remote);
+				} else if (local > remote) {
+					settingsFrame.contentWindow.postMessage({
+						'localStorage.setItem': totalTimeKey,
+						value: local
+					}, settingsOrigin);
+				}
+			} catch (e) {
+			}
+		});
+
+		try {
+			var lastTotalTimeSync = 0,
+				setItem = localStorage.setItem;
+			localStorage.setItem = function (key, value) {
+				setItem.call(localStorage, key, value);
+				var now = Date.now();
+				if (key === totalTimeKey && now - lastTotalTimeSync > 60 * 1000) {
+					lastTotalTimeSync = now;
+					settingsFrame.contentWindow.postMessage({
+						'localStorage.setItem': totalTimeKey,
+						value: value
+					}, settingsOrigin);
+				}
+			};
+		} catch (e) {
+		}
+    </script>
+
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" class="next-head">
+    </head>
+    <body>
+	<div id="MiuiBrowser" style="display: none; background-color: yellow; padding: 0.5em">
+		�� MiuiBrowser ��������: ����� ����� ���� ���������� �� �����. ��� ����������� ��������� ����� ������������
+		<a href="https://play.google.com/store/apps/details?id=com.android.chrome" target="_blank">Google Chrome</a>
+		&nbsp;<button>ok</button>
+	</div>
+	<script data-name="miui">
+		if (/MiuiBrowser\/13\.[3-8]\./.test(navigator.userAgent)) {
+			var miui = document.getElementById('MiuiBrowser');
+			miui.style.display = 'block';
+			miui.querySelector('button').onclick = function () {miui.remove()}
+		}
+	</script>
+<div id="player">
+        <span class="placeholder">loading...</span>
+    </div>
+
+<script data-name="ad">
+    var middleCount = 0,
+	    adTimeouts = { loading: 20000, starting: 20000, toNextImp: 5000, global: 120000 },
+        adsConfig = {
+        pre: {
+	        vast: { timeouts: adTimeouts, sequential: true },
+            maxImpressions:  2 ,
+	        urls: ["https://4251.tech/load-xml/?id=50139&roll=pre&dcc=1&maximp=2"]
+
+        },
+    
+        middle: {
+	        offset: 10 * 60,
+	        vast: {
+                sequential: true, 
+				timeouts: {loading: 60000, starting: 60000, global: 120000}
+            },
+	        nonLinearFallback: true,
+            pop: true,
+            total:  1 ,
+            maxImpressions: 1,
+            urls: ["https://4251.tech/load-xml/?id=50140&maximp=1&dcc=1&mid=6","https://4251.tech/load-xml/?id=50141&maximp=1&dcc=1&mid=6"]
+,
+	        getUrls: function () {
+		        var u = middleCount && adsConfig.middle.urls
+			        ? adsConfig.middle.urls.slice(1)
+			        : adsConfig.middle.urls;
+		        middleCount++;
+		        return u;
+	        },
+            label: { name: 'roll', val: 'mid', counter: true }
+        },
+    
+        post: {
+	        vast: {
+		        sequential: true,
+		        timeouts: { loading: 9000, starting: 6000, global: 55000 }
+	        },
+	        exitFullscreenVideo: true,
+			skipCD: true,
+            maxImpressions: 1,
+            urls: ["https://4251.tech/load-xml/?id=58302&roll=post&maximp=1&dcc=1"]
+
+        },
+    
+        download: {
+            maxImpressions: 2,
+            urls: ["https://4251.tech/load-xml/?id=50142&maximp=1"]
+
+        },
+    
+        confirmTimeout: 60 * 1000, 
+        confirmOn: ['localhost'],
+        vast: { timeouts: adTimeouts },
+	    toLongSkip: 50,
+        volume: 0.3,
+        tv: true,
+        midThenNonLinear:  true 
+    };
+</script>
+
+    <script data-name="mk">
+		makePlayer({
+			blocked: false ,
+			title: "���������",
+			id: 259369 ,
+			poster: "https://img.imgilall.me/movies/video/2/5/9/3/6/9/0/0/0/0/800x450_259369.jpg?t=1594470722",
+			source: {
+				dash: "https://hye1eaipby4w.takedwn.ws/07_20/11/14/JHVHWWP6/607807.mpd",
+				hls: "https://hye1eaipby4w.takedwn.ws/07_11_20/07/11/06/Y3CGH3NJ/K2Y7RKRM.mp4/master.m3u8",
+				audio: {"names":["Diva Universal"],"order":[0]},
+				cc: []
+			},
+			sections: [],
+			qualityByWidth: {"1280":1080,"640":480,"864":720},
+			p2p: {
+				geo: ["UA","","48611"],
+				tolerance:  4 ,
+				tracker: "wss://t5.zcvh.net/v1/ws",
+				longDownload: 300 * 1000
+			}
+		});
+
+		var videoKey = 607807 ;
+    </script>
+
+
+    </body>
+    </html>
